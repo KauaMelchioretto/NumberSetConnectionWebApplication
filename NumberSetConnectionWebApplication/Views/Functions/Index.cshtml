@@ -1,0 +1,52 @@
+﻿@model NumberSetConnectionWebApplication.Models.Functions
+
+
+@using (Html.BeginForm(@Model.FunctionName, "Functions", new { _elements = Json.Encode(Model.Elements), FormMethod.Post }))
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Functions</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.FirstNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.FirstNumber, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FirstNumber, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SecondNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.SecondNumber, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.SecondNumber, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @if (TempData["Message"] != null)
+    {
+        <strong stle="margin-left:10px">@TempData["Message"].ToString()</strong>
+    }
+
+    @if (TempData["IsConnected"] != null)
+    {
+        <strong stle="margin-left:10px">@TempData["IsConnected"].ToString()</strong>
+    }
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="@Model.FunctionName" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", "ElementView", new { elements = Json.Encode(Model.Elements) }, null)
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

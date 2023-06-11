@@ -1,0 +1,36 @@
+﻿@model IList<NumberSetConnectionWebApplication.Models.Element>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Elements</h2>
+
+<table class="table" id="roles_table">
+    <thead>
+        <tr>
+            <th>
+                Elements
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if(Model != null) {
+        for (var i = 0; i < Model.Count; i++)
+        {
+            <tr>
+                <td style="@(Model[i].Value % 2 == 0 ? "background-color:  rgb(220, 220, 220);" : "")">@Model[i].Value</td>
+                <td>
+                    @Html.ActionLink("Connect", "RedirectToFunctionView", new { _currentElement = Json.Encode(Model[i]), _allElements = Json.Encode(Model), _functionName = "Create" }) |
+                    @Html.ActionLink("Query", "RedirectToFunctionView", new { _currentElement = Json.Encode(Model[i]), _allElements = Json.Encode(Model), _functionName = "Query" })
+                </td>
+            </tr>
+        }
+        }
+    </tbody>
+</table>
+
+<div>
+    <a class="btn btn-default" href="@Url.Action("Index", "Network")">Back</a>
+</div>
